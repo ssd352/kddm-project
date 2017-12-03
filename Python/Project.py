@@ -18,8 +18,8 @@ if __name__ == "__main__":
     clusterer.fit(X_scaled)
     labels = clusterer.labels_
     print("Jaccard Index is ", metrics.jaccard_similarity_score(y_true, labels))
-    print("Rand Index is", metrics.adjusted_rand_score(y_true, labels))
-    print("Silhouette score is", metrics.silhouette_score(tr, labels))
+    print("Adjusted Rand Index is", metrics.adjusted_rand_score(y_true, labels))
+    # print("Silhouette score is", metrics.silhouette_score(tr, labels))
 
     # db = sklearn.cluster.DBSCAN(eps=0.5, min_samples=5).fit(X_scaled)
     # clusterer.predict()
@@ -31,4 +31,4 @@ if __name__ == "__main__":
     print(g)
     # print(clusterer.condensed_tree_.to_pandas())
     # clusterer.condensed_tree_.plot(select_clusters=True)
-    # clusterer.single_linkage_tree_.plot(cmap='viridis', colorbar=True)
+    clusterer.single_linkage_tree_.plot(cmap='viridis', colorbar=True)

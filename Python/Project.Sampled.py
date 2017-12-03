@@ -19,7 +19,7 @@ if __name__ == "__main__":
     X_scaled = scale(tr, axis=1)
     y_true = np.asarray(list(range(NUM_CLASSES)) * 15)
 
-    SAMPLE = 5
+    SAMPLE = NUM_CLASSES
     picking_ind = [class_num + i * NUM_CLASSES for class_num in range(SAMPLE) for i in range(15)]
     X_sampled = X_scaled[picking_ind, :]
     y_sampled = y_true[picking_ind]

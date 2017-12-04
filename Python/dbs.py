@@ -18,7 +18,7 @@ if __name__ == "__main__":
     y_sampled = y_true[picking_ind]
 
     print('DBScan-------------------------------->')
-    db = DBSCAN(eps=0.1, min_samples=5).fit(X_sampled)
+    db = DBSCAN(eps=0.05, min_samples=5).fit(X_sampled)
     np.save("DBScan.npy", db.labels_)
     print("Number of clusters", db.labels_.max() + 1)
     print("Jaccard Index for DBScan is ", metrics.jaccard_similarity_score(y_sampled, db.labels_))

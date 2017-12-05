@@ -18,16 +18,22 @@ if __name__ == "__main__":
     y_sampled = y_true[picking_ind]
 
     # print('DBScan-------------------------------->')
-    print('eps,minPts,Number of Clusters,Jaccard Index,Adjusted Rand Index')
+    # print('eps,minPts,Number of Clusters,Jaccard Index,Adjusted Rand Index')
     for min_samples in range(2, 15 + 1):
-        for eps in [0.01, 0.05, 0.1, 0.125, 0.25, 0.5, 0.75, 1]:
+        for eps in [1, 0.75, 0.5, 0.25, 0.125, 0.1, 0.05, 0.01, 0.5 ** 5, 0.5 ** 6, 0.5 ** 7, 0.5 ** 8]:
             # print('epsilon is ', eps, 'min points is', min_samples)
             db = DBSCAN(eps=eps, min_samples=min_samples).fit(X_sampled)
-            # np.save("DBScan.npy", db.labels_)
-            print("{},{},{},{},{}".format(eps, min_samples, db.labels_.max() + 1,
+            
+	    # np.save("DBScan.npy", db.labels_)
+            with open('dbs.sweep.csv', mode='a') as f:
+                f.write("{},{},{},{},{},{}\n".format(eps, min_samples, db.labels_.max() + 1,
                   metrics.jaccard_similarity_score(y_sampled, db.labels_),
-                  metrics.adjusted_rand_score(y_sampled, db.labels_)))
-            # print("Number of clusters", db.labels_.max() + 1)
+                  metrics.adjusted_rand_score(y_sampled, db.labels_), np.count_nonzero(db.labels_==-1)/15.0/4199.0*100))
+            print("{},{},{},{},{},{}".format(eps, min_samples, db.labels_.max() + 1,
+                  metrics.jaccard_similarity_score(y_sampled, db.labels_),
+                  metrics.adjusted_rand_score(y_sampled, db.labels_), np.count_nonzero(db.labels_==-1)/15.0/4199.0*100))
+
+ 	    # print("Number of clusters", db.labels_.max() + 1)
             # print("Jaccard Index for DBScan is ", metrics.jaccard_similarity_score(y_sampled, db.labels_))
             # print("Rand Index for DBScan is", metrics.adjusted_rand_score(y_sampled, db.labels_))
             # print("Silhouette score is", metrics.silhouette_score(X_sampled, db.labels_))
